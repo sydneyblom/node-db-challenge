@@ -2,13 +2,13 @@ const express = require('express');
 const helmet = require('helmet');
 
 
-const router = require('./router.js');
+const router = require('./projects/projectRouter');
 
 const server = express();
 
 server.use(helmet());
 server.use(express.json());//
-server.use('/', router);
+server.use('/api/projects', router);
 
 module.exports = server;
 
