@@ -25,13 +25,11 @@ function addProjects(project){
 
 
 function getTasks() {
-    let tasks = db('tasks')
+    return db('tasks')
         .join('projects', 'projects.id', '=','tasks.project_id')
-        .select('tasks.id', 'tasks.description', 'tasks.notes', 'tasks.completed', 'projects.name as project_name', 'projects.description as project_descriptions')
-        .then(function(data) {
-            return data.map(task => {
-                task.completed = task.completed ? 'true' : 'false';
-            })
+        .select('tasks.id', 'tasks.description', 'tasks.notes', 'tasks.completed', 'projects.name as project_name', 'projects.description as project_descriptions').map(task => {
+            task.completed = task.completed ? 'true' : 'false';
+            return task;
         });
 }
 
@@ -43,14 +41,12 @@ function addTasks(id, task){
     })
 }
 
-function getResources() {
+function getResources(){
+    console.log(db('resources'));
     return db('resources');
 }
 
-function addResource(resource) {
-    return db('resource')
-        .insert(resource)
-}
+
 
 
 module.exports = {
@@ -58,7 +54,6 @@ module.exports = {
     getProjectById,//
     addProjects,//
     addTasks, 
-    getTasks,
-    getResources,
-    addResource
+    getTasks, //
+    getResources
 }

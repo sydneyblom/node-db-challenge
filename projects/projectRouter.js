@@ -16,6 +16,24 @@ projectRouter.get('/', (req, res) => {
         });
 });
 
+
+//THISSSS
+projectRouter.get('/resources', (req, res) => {
+    console.log('hiiiuii');
+    projectDB.getResources()
+    .then(resources => {
+        console.log(resources);
+        res.status(200).json(resources);
+    })
+    .catch(error => {
+        console.log("get resources error", error);
+        res.status(500).json({ error: 'There was an error retrieving the resources for this project.'});
+    })
+
+})
+
+
+
 projectRouter.get('/:id', (req, res) => {
     const {id} = req.params;
     projectDB.getProjectById(id)
@@ -36,10 +54,10 @@ projectRouter.post('/', (req, res) => {
         res.status(500).json({ error: 'Error adding Project to DB'})
     })
 })
-//not workinng?
+//THISSSSS
 projectRouter.get('/:id/tasks', (req, res) => {
     const {id} = req.params;
-    projectDB.getTasks(id)
+        projectDB.getTasks(id)
     .then(tasks => {
         res.status(200).json(tasks);
     })
@@ -47,7 +65,7 @@ projectRouter.get('/:id/tasks', (req, res) => {
         console.log("task retrieval error", error);
         res.status(500).json({ error: 'There was an error retrieving the tasks for that project.'})
     })
-})
+});
 
 
 projectRouter.post('/:id/tasks', (req, res) => {
@@ -61,32 +79,9 @@ projectRouter.post('/:id/tasks', (req, res) => {
     .catch(error => {
         res.status(500).json({ error: 'There was an error adding the task to the database.'})
     })
-})
+});
 
 
-projectRouter.get('/:id/resources', (req, res) => {
-    const {id} = req.params;
-    projectDB.getResources(id)
-    .then(resources => {
-        res.status(200).json(resources);
-    })
-    .catch(error => {
-        res.status(500).json({ error: 'There was error getting resources'});
-    })
-})
-
-projectRouter.post('/:id/resources', (req, res) => {
-    const {id} = req.params;
-
-    projectDB.addResources(id, req.body)
-    .then(resource => {
-        res.status(200).json(req.body);
-    })
-    .catch(error => {
-        res.status(500).json({ error: 'Error adding resource for project'});
-    })
-
-})
 
 
 module.exports = projectRouter;
